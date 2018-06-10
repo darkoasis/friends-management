@@ -1,0 +1,38 @@
+---
+spring:
+  datasource:
+    initialize: false
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+    username: ""
+    password: ""
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/projectname
+#    username: expressdb
+#    password: password
+
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect
+#  dialect: org.hibernate.dialect.PostgreSQLDialect
+  hbm2ddl.auto: create
+  implicit_naming_strategy: jpa
+  format_sql: false
+  show_sql: false
+
+  generate_statistics: false
+  cache:
+    use_second_level_cache: false
+    use_query_cache: false
+
+
+projectname:
+  kms:
+#    endpoint:    
+    alias: 
+  aws:
+    accesskey: key
+    secretkey: key2
+
+logging:
+  level:
+    ROOT: INFO

@@ -1,0 +1,8 @@
+<FindBugsFilter>
+  <Match>
+  	<Method name="~.*_hibernate_.*"/>
+  </Match>
+  <Match> 	
+	<Package name="~org\.tempuri.*"/>  
+  </Match>
+</FindBugsFilter>

@@ -1,0 +1,92 @@
+spring:
+  main:
+    banner-mode: "off"
+  jackson:
+    mapper:
+      default-view-inclusion: true
+    default-property-inclusion: NON_EMPTY
+
+  datasource:
+    initialize: false
+    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/projectname
+#    username: postgres
+#    password: postgres
+
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
+  hbm2ddl.auto: update
+  implicit_naming_strategy: jpa
+  format_sql: false
+  show_sql: false
+  generate_statistics: false
+  cache:
+    use_second_level_cache: true
+    use_query_cache: true
+    region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+
+credstash:
+  context:
+    Environment: dev
+    Application: projectname
+
+server:
+  contextPath: /api/v1/
+    
+################### DEV Settings #######################
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/friends-mgmt
+    username: postgres
+    password: postgres
+    
+projectname:
+  systemname: 
+    endpoint: http://localhost:8812
+    username: test
+    password: password
+      
+logging:
+  file: log/projectname.log 
+  level: 
+    ROOT: INFO
+    org.springframework.ws.client.MessageTracing: TRACE
+    org.hobsoft.spring.resttemplatelogger.LoggingCustomizer: DEBUG
+
+    
+################### UAT Settings #######################
+---
+spring:
+  profiles: uat
+
+hibernate:
+  # update the table structure automatically
+  hbm2ddl.auto: update
+
+projectname:
+  systemname: 
+    endpoint: http://localhost:8812
+    
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.ws.client.MessageTracing: TRACE 
+    org.hobsoft.spring.resttemplatelogger.LoggingCustomizer: DEBUG
+
+
+################### PROD Settings #######################
+---
+spring:
+  profiles: prod
+
+projectname:
+  systemname: 
+    endpoint: http://localhost:8812
+    
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.ws.client.MessageTracing: TRACE
+    org.hobsoft.spring.resttemplatelogger.LoggingCustomizer: DEBUG

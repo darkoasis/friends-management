@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+	<diskStore path="java.io.tmpdir" />
+
+	<!--
+	    maxEntriesLocalHeap="10000"
+		maxEntriesLocalDisk="10000000" 
+	 -->
+	<defaultCache 
+		eternal="false"
+		timeToIdleSeconds="120" 
+		timeToLiveSeconds="600" 
+		diskSpoolBufferSizeMB="30"
+		diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" 
+		statistics="true">
+		<persistence strategy="localTempSwap" />
+	</defaultCache>
+
+	<cache 
+		name="org.hibernate.cache.internal.StandardQueryCache"
+		maxElementsInMemory="2000" 
+		eternal="false" 
+		timeToLiveSeconds="600"
+		overflowToDisk="true" />
+
+	<cache 
+		name="org.hibernate.cache.spi.UpdateTimestampsCache"
+		maxElementsInMemory="5000" 
+		eternal="true" 
+		overflowToDisk="true" />	
+
+</ehcache>
