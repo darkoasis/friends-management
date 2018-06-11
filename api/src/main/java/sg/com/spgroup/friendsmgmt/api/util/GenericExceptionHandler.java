@@ -1,9 +1,14 @@
 package sg.com.spgroup.friendsmgmt.api.util;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,8 +17,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * Catch the any un-handled <code>Exception</code> for security
  */
 @ControllerAdvice
-public class GenericExceptionHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericExceptionHandler.class);
+public class GenericExceptionHandler
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger( GenericExceptionHandler.class );
 
     /**
      * Handle the validation errors
@@ -22,19 +28,27 @@ public class GenericExceptionHandler {
      *            the validation errors
      * @param resp
      *            the response servlet object
+     * @throws IOException
      */
-    /*
-     * @ExceptionHandler(value = {ConstraintViolationException.class}) public void
-     * handleValidationFailure(HttpServletResponse resp,
-     * ConstraintViolationException ex) { /// LOGGER.error( "{}", ex ); for
-     * (ConstraintViolation<?> cve : ex.getConstraintViolations()) {
-     * LOGGER.error("---result: {} - {}", cve.getPropertyPath(), cve.getMessage());
-     * for (Object param : cve.getExecutableParameters()) {
-     * LOGGER.error("---param: {}", (param != null ? param.toString() : "null")); }
-     * }
-     * 
-     * resp.setStatus(HttpServletResponse.SC_BAD_REQUEST); }
-     */
+
+    @ExceptionHandler( value = { ConstraintViolationException.class } )
+    public void handleValidationFailure( HttpServletResponse resp, ConstraintViolationException ex )
+            throws IOException
+    {
+        for ( ConstraintViolation<?> cve : ex.getConstraintViolations() )
+        {
+            LOGGER.error( "---result: {} - {}", cve.getPropertyPath(), cve.getMessage() );
+            for ( Object param : cve.getExecutableParameters() )
+            {
+                LOGGER.error( "---param: {}", ( param != null ? param.toString() : "null" ) );
+            }
+        }
+
+        resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+        resp.getWriter().write( "{ \"error\" : \"Invalid Parameter\"}" );
+        resp.setContentType( "application/json" );
+    }
+
     /**
      * Handle the parameter binding errors
      * 
@@ -43,10 +57,11 @@ public class GenericExceptionHandler {
      * @param ex
      *            the parameter binding errors
      */
-    @ExceptionHandler(value = { ServletRequestBindingException.class })
-    public void handleBindFailure(HttpServletResponse resp, ServletRequestBindingException ex) {
-	LOGGER.error("{}", ex);
-	resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    @ExceptionHandler( value = { ServletRequestBindingException.class } )
+    public void handleBindFailure( HttpServletResponse resp, ServletRequestBindingException ex )
+    {
+        LOGGER.error( "{}", ex );
+        resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
     }
 
     /**
@@ -57,12 +72,13 @@ public class GenericExceptionHandler {
      * @param e
      *            the validation errors
      */
-    /*
-     * @ExceptionHandler(value = MethodArgumentNotValidException.class) public void
-     * handleMethodArgumentNotValidException(HttpServletResponse r,
-     * MethodArgumentNotValidException e) { LOGGER.info("{}", e);
-     * r.setStatus(HttpServletResponse.SC_BAD_REQUEST); }
-     */
+    @ExceptionHandler( value = MethodArgumentNotValidException.class )
+    public void handleMethodArgumentNotValidException( HttpServletResponse r,
+                                                       MethodArgumentNotValidException e )
+    {
+        LOGGER.info( "{}", e );
+        r.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+    }
 
     /**
      * Handle generic uncaught exception
@@ -72,9 +88,10 @@ public class GenericExceptionHandler {
      * @param e
      *            the unknown exceptions
      */
-    @ExceptionHandler(value = Exception.class)
-    public void handleException(HttpServletResponse resp, Exception e) {
-	LOGGER.error("{}", e);
-	resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    @ExceptionHandler( value = Exception.class )
+    public void handleException( HttpServletResponse resp, Exception e )
+    {
+        LOGGER.error( "{}", e );
+        resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
     }
 }

@@ -16,5 +16,4 @@ public class APIConfiguration
     {
         return new MethodValidationPostProcessor();
     }
-
 }

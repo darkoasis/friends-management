@@ -36,11 +36,10 @@ public class SwaggerConfig
     private ApiInfo apiInfo()
     {
         String version = System.getProperty( "sg.com.spgroup.friendsmgmt.api.version" );
-        return new ApiInfoBuilder().title( "Project Name REST APIs" )
-                .description( "REST APIs for Project Name." )
-                .contact(
-                        new Contact( "Singtel", "https://www.singtel.com", "singtel@singtel.com" ) )
-                .license( "Singtel" ).licenseUrl( "http://www.singtel.com" ).version( version )
-                .build();
+        return new ApiInfoBuilder().title( "Friend Management REST APIs" )
+                .description( "REST APIs for Friend Management." )
+                .contact( new Contact( "Alvin Flores", "http://www.domain.com",
+                        "alvinjavierflores@gmail.com" ) )
+                .license( "Open" ).licenseUrl( "http://www.domain.com" ).version( version ).build();
     }
 }

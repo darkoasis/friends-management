@@ -24,7 +24,6 @@ import sg.com.spgroup.friendsmgmt.annotations.JsonDateFormat;
  *    }
  * </pre>
  * 
- * @author ursbrbalaji
  */
 
 @MappedSuperclass

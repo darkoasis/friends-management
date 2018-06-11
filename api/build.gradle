@@ -250,13 +250,6 @@ check {
    dependsOn += ['pmdReport']
 }
 
-/*
- * If you need to publish, ensure these variables are set in your 
- * ~/.gradle/gradle.properties file:
- *
- *      singtel_digital_username
- *      singtel_digital_password
- */
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -273,19 +266,6 @@ publishing {
         }
     }    
     repositories {
-    	/*
-        maven {
-            url "https://nexus.dev.aws.singtel.com/repository/maven-snapshots/"
-            
-            // Define if provided - only the publish tasks needs credentials.
-      		if ( project.hasProperty( 'singtel_digital_username' ) ) {
-	              credentials {
-	                username singtel_digital_username
-	                password singtel_digital_password
-            		}	 
-        		}
-    		}
-    	*/
-    	mavenCentral()
+	   	mavenCentral()
   	}
 }

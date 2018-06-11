@@ -46,11 +46,6 @@ repositories {
     
     mavenCentral()
     jcenter()
-    
-    // jcredstash
-    //maven {
-    //    url "https://nexus.dev.aws.singtel.com/repository/maven-public/"
-    //}
 }
 
 project.ext {
@@ -231,22 +226,5 @@ publishing {
         }
     }
     repositories {
-    	/*
-        maven {
-            if ( project.version.endsWith( '-SNAPSHOT' ) ) {
-                url "https://nexus.dev.aws.singtel.com/repository/maven-snapshots/"
-            } else {
-                url "https://nexus.dev.aws.singtel.com/repository/maven-releases/"
-            }
-        
-            // Define if provided - only the publish tasks needs credentials.
-            if ( project.hasProperty( 'singtel_digital_username' ) ) {
-                credentials {
-                    username singtel_digital_username
-                    password singtel_digital_password
-                }
-            }            
-        }
-        */
     }
 }

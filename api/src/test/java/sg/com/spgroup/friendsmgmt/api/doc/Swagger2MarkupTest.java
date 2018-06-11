@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import sg.com.spgroup.friendsmgmt.api.AbstractControllerTest;
-@Ignore
+
 @AutoConfigureRestDocs( outputDir = "build/asciidoc/snippets" )
 public class Swagger2MarkupTest extends AbstractControllerTest
 {
@@ -35,6 +34,7 @@ public class Swagger2MarkupTest extends AbstractControllerTest
 
     private MockMvc mock;
 
+    @Override
     @Before
     public void setup()
     {

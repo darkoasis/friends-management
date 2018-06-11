@@ -5,68 +5,102 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-public class FriendsMgmtResponse {
-	@JsonView(Views.Status.class)
-	private boolean status;
+/**
+ * Main API response class
+ * 
+ * @author alvin
+ */
+public class FriendsMgmtResponse
+{
+    /**
+     * Request status
+     */
+    @JsonView( Views.Status.class )
+    private boolean status;
 
-	@JsonView(Views.EmailList.class)
-	private List<String> emailList;
-	
-	@JsonView(Views.Friends.class)
-	private List<String> friends;
-	
-	@JsonView(Views.Recepients.class)
-	private List<String> recepients;
-	
-	@JsonView(Views.Count.class)
-	private int count;
+    /**
+     * List of registered emails
+     */
+    @JsonView( Views.EmailList.class )
+    private List<String> emailList;
 
-	public boolean getStatus() {
-		return status;
-	}
+    /**
+     * List of friend connection
+     */
+    @JsonView( Views.Friends.class )
+    private List<String> friends;
 
-	public void setStatus(final boolean status) {
-		this.status = status;
-	}
+    /**
+     * List of update feeds recepients
+     */
+    @JsonView( Views.Recepients.class )
+    private List<String> recepients;
 
-	public List<String> getEmailList() {
-		if(emailList == null) {
-			emailList = new ArrayList<String>();
-		}
-		return emailList;
-	}
+    /**
+     * Size of list string
+     */
+    @JsonView( Views.Count.class )
+    private int count;
 
-	public void setEmailList(final List<String> emailList) {
-		this.emailList = emailList;
-	}
+    public boolean getStatus()
+    {
+        return status;
+    }
 
-	public List<String> getFriends() {
-		if(friends == null) {
-			friends = new ArrayList<String>();
-		}
-		return friends;
-	}
+    public void setStatus( final boolean status )
+    {
+        this.status = status;
+    }
 
-	public void setFriends(final List<String> friends) {
-		this.friends = friends;
-	}
+    public List<String> getEmailList()
+    {
+        if ( emailList == null )
+        {
+            emailList = new ArrayList<String>();
+        }
+        return emailList;
+    }
 
-	public List<String> getRecepients() {
-		if(recepients == null) {
-			recepients = new ArrayList<String>();
-		}
-		return recepients;
-	}
+    public void setEmailList( final List<String> emailList )
+    {
+        this.emailList = emailList;
+    }
 
-	public void setRecepients(final List<String> recepients) {
-		this.recepients = recepients;
-	}
+    public List<String> getFriends()
+    {
+        if ( friends == null )
+        {
+            friends = new ArrayList<String>();
+        }
+        return friends;
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public void setFriends( final List<String> friends )
+    {
+        this.friends = friends;
+    }
 
-	public void setCount(final int count) {
-		this.count = count;
-	}	
+    public List<String> getRecepients()
+    {
+        if ( recepients == null )
+        {
+            recepients = new ArrayList<String>();
+        }
+        return recepients;
+    }
+
+    public void setRecepients( final List<String> recepients )
+    {
+        this.recepients = recepients;
+    }
+
+    public int getCount()
+    {
+        return count;
+    }
+
+    public void setCount( final int count )
+    {
+        this.count = count;
+    }
 }
