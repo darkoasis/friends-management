@@ -1,7 +1,6 @@
 package sg.com.spgroup.friendsmgmt.exception;
 
-import java.util.HashMap;
-import java.util.Map;
+import sg.com.spgroup.friendsmgmt.model.ErrorMessage;
 
 /**
  * Custom exception to provide front-end notification
@@ -11,8 +10,8 @@ import java.util.Map;
 @SuppressWarnings( "serial" )
 public abstract class ApplicationException extends Exception
 {
-    private String              message;
-    private Map<String, String> errorMessage;
+    private String       message;
+    private ErrorMessage errorMessage;
 
     /**
      * Initializes this exception by taking the error message
@@ -42,10 +41,9 @@ public abstract class ApplicationException extends Exception
      * 
      * @return Hashmap of error message
      */
-    public Map<String, String> getErrorMessage()
+    public ErrorMessage getErrorMessage()
     {
-        errorMessage = new HashMap<>();
-        errorMessage.put( "error", message );
+        errorMessage = new ErrorMessage( message );
         return errorMessage;
     }
 }

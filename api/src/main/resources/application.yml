@@ -28,7 +28,7 @@ hibernate:
 credstash:
   context:
     Environment: dev
-    Application: projectname
+    Application: friends-management
 
 server:
   contextPath: /api/v1/
@@ -38,7 +38,8 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/friends-mgmt
+#    url: jdbc:postgresql://localhost:5432/friends-mgmt
+    url: jdbc:postgresql://spgroup.c020w2wvysvv.ap-southeast-1.rds.amazonaws.com:5432/friends_mgmt
     username: postgres
     password: postgres
     
@@ -49,7 +50,7 @@ projectname:
     password: password
       
 logging:
-  file: log/projectname.log 
+  file: log/friends-management.log 
   level: 
     ROOT: INFO
     org.springframework.ws.client.MessageTracing: TRACE
@@ -63,7 +64,7 @@ spring:
 
 hibernate:
   # update the table structure automatically
-  hbm2ddl.auto: update
+  hbm2ddl.auto: create
 
 projectname:
   systemname: 

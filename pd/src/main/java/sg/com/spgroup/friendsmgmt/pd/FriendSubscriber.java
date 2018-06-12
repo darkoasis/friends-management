@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table( uniqueConstraints = {
         @UniqueConstraint( columnNames = { "profileUUID", "subscriberUUID" } ) }, indexes = {
-                @Index( name = "byProfileUUID", columnList = "profileUUID" ),
+                @Index( name = "subscribedByProfileUUID", columnList = "profileUUID" ),
                 @Index( name = "bySubscriberUUID", columnList = "subscriberUUID" ),
                 @Index( name = "byProfileAndSubscriberUUID", columnList = "profileUUID,subscriberUUID" ) } )
 public class FriendSubscriber extends AbstractAuditableEntity

@@ -38,8 +38,7 @@ public class SwaggerConfig
         String version = System.getProperty( "sg.com.spgroup.friendsmgmt.api.version" );
         return new ApiInfoBuilder().title( "Friend Management REST APIs" )
                 .description( "REST APIs for Friend Management." )
-                .contact( new Contact( "Alvin Flores", "http://www.domain.com",
-                        "alvinjavierflores@gmail.com" ) )
-                .license( "Open" ).licenseUrl( "http://www.domain.com" ).version( version ).build();
+                .contact( new Contact( "Alvin Flores", "", "alvinjavierflores@gmail.com" ) )
+                .license( "Open" ).version( version ).build();
     }
 }

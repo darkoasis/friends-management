@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table( uniqueConstraints = {
         @UniqueConstraint( columnNames = { "profileUUID", "blockedUUID" } ) }, indexes = {
-                @Index( name = "byProfileUUID", columnList = "profileUUID" ) } )
+                @Index( name = "blockedByProfileUUID", columnList = "profileUUID" ) } )
 public class FriendBlock extends AbstractAuditableEntity
 {
     private UUID profileUUID;

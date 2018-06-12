@@ -31,12 +31,13 @@ import sg.com.spgroup.friendsmgmt.api.param.UserEmailParam;
 import sg.com.spgroup.friendsmgmt.api.param.UserProfileParam;
 import sg.com.spgroup.friendsmgmt.exception.ApplicationException;
 import sg.com.spgroup.friendsmgmt.exception.GeneralApplicationException;
+import sg.com.spgroup.friendsmgmt.model.ErrorMessage;
 import sg.com.spgroup.friendsmgmt.model.FriendsMgmtResponse;
 import sg.com.spgroup.friendsmgmt.model.Views;
 import sg.com.spgroup.friendsmgmt.services.FriendManagementService;
 
 @RestController
-@Api( value = "/friends" )
+@Api( value = "friends" )
 @RequestMapping( value = "/friends", produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
 @Validated
 public class FriendsController
@@ -57,14 +58,13 @@ public class FriendsController
      */
     @RequestMapping( value = "/", method = RequestMethod.POST )
     @ApiOperation( //
-            value = "Persists a user profile in database", //
-            notes = "returns 201 if successful, an error message otherwise" //
-    ) //
+            value = "Create User Profile", //
+            notes = "Persists a user profile in database" ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 201, message = "save data successfully" ),
-                    @ApiResponse( code = 422, message = "saving failed" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
+                    @ApiResponse( code = 201, message = "Data saved successfully", response = Views.Status.class ),
+                    @ApiResponse( code = 422, message = "Saving failed", response = ErrorMessage.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ) } )
 
     @Transactional
     @JsonView( Views.Status.class )
@@ -100,14 +100,14 @@ public class FriendsController
     }
 
     @RequestMapping( value = "/", method = RequestMethod.GET )
+    @JsonView( Views.EmailList.class )
     @ApiOperation( //
-            value = "Returns the list of registered email addresses", //
-            notes = "returns 200 if successful" //
+            value = "Get Registered Email Adresses", //
+            notes = "Returns the list of registered email addresses" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 200, message = "Email list was successfully retrieved" ) } )
-    @JsonView( Views.EmailList.class )
+                    @ApiResponse( code = 200, message = "Email list was successfully retrieved", response = Views.EmailList.class ) } )
     public ResponseEntity<?> list() //
     {
         final FriendsMgmtResponse response = friendMgmtSvc.getAllEmailList();
@@ -115,17 +115,17 @@ public class FriendsController
     }
 
     @RequestMapping( value = "/connection/", method = RequestMethod.POST )
+    @JsonView( Views.Status.class )
     @ApiOperation( //
-            value = "Create a friend connection", //
-            notes = "returns 201 if successful, and error message otherwise" //
+            value = "Create Friend Connection", //
+            notes = "Create a friend connection between two email address" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 201, message = "save data successfully" ),
-                    @ApiResponse( code = 422, message = "saving failed" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
+                    @ApiResponse( code = 201, message = "Data saved successfully", response = Views.Status.class ),
+                    @ApiResponse( code = 422, message = "Saving failed", response = ErrorMessage.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ) } )
     @Transactional
-    @JsonView( Views.Status.class )
     public ResponseEntity<?> createFriendConnection( //
                                                      @ApiParam( value = "Friend connection details", required = true ) //
                                                      @RequestBody //
@@ -161,15 +161,16 @@ public class FriendsController
     }
 
     @RequestMapping( value = "/connection/list/", method = RequestMethod.POST )
+    @JsonView( Views.FriendsList.class )
     @ApiOperation( //
-            value = "Returns the list of friend connection", //
-            notes = "returns 201 if successful, and error message otherwise" //
+            value = "Get Friend Connections", //
+            notes = "Returns the list of friend connection for a specific email address" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 200, message = "data retrieved successfully" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
-    @JsonView( Views.FriendsList.class )
+                    @ApiResponse( code = 200, message = "Data retrieved successfully", response = Views.FriendsList.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ),
+                    @ApiResponse( code = 422, message = "Email address not registered", response = ErrorMessage.class ) } )
     public ResponseEntity<?> getFriendConnection( //
                                                   @ApiParam( value = "User email address", required = true ) //
                                                   @RequestBody //
@@ -200,14 +201,14 @@ public class FriendsController
 
     @RequestMapping( value = "/connection/subscribe/", method = RequestMethod.POST )
     @ApiOperation( //
-            value = "Creates a subscription", //
-            notes = "returns 201 if successful, and error message otherwise" //
+            value = "Create Subscription", //
+            notes = "Creates a subscription between target and requestor email address" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 201, message = "save data successfully" ),
-                    @ApiResponse( code = 422, message = "saving failed" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
+                    @ApiResponse( code = 201, message = "Data saved successfully", response = Views.Status.class ),
+                    @ApiResponse( code = 422, message = "Saving failed", response = ErrorMessage.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ) } )
     @JsonView( Views.Status.class )
     public ResponseEntity<?> subscribeToUpdates( //
                                                  @ApiParam( value = "action details", required = true ) //
@@ -250,14 +251,14 @@ public class FriendsController
 
     @RequestMapping( value = "/connection/block/", method = RequestMethod.POST )
     @ApiOperation( //
-            value = "Create a blocked connection", //
-            notes = "returns 201 if successful, and error message otherwise" //
+            value = "Create Block Connection", //
+            notes = "Blocked updates from requestor to target email address, no friend connection can be done once the target is blocked" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 201, message = "save data successfully" ),
-                    @ApiResponse( code = 422, message = "saving failed" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
+                    @ApiResponse( code = 201, message = "Data saved successfully", response = Views.Status.class ),
+                    @ApiResponse( code = 422, message = "Saving failed", response = ErrorMessage.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ) } )
     @JsonView( Views.Status.class )
     public ResponseEntity<?> blockFriend( //
                                           @ApiParam( value = "action details", required = true ) //
@@ -292,13 +293,13 @@ public class FriendsController
 
     @RequestMapping( value = "/message/", method = RequestMethod.POST )
     @ApiOperation( //
-            value = "Returns a list of email address eligible to receive message updates", //
-            notes = "returns 200 if successful, and error message otherwise" //
+            value = "Post Message", //
+            notes = "Returns a list of email address eligible to receive message updates" //
     ) //
     @ApiResponses( //
             value = { //
-                    @ApiResponse( code = 200, message = "retrieved data successfully" ),
-                    @ApiResponse( code = 400, message = "invalid parameters" ) } )
+                    @ApiResponse( code = 200, message = "Retrieved data successfully", response = Views.UpdateList.class ),
+                    @ApiResponse( code = 400, message = "Invalid parameters", response = ErrorMessage.class ) } )
     @JsonView( Views.UpdateList.class )
     public ResponseEntity<?> postUpdates( //
                                           @ApiParam( value = "Message update details", required = true ) //

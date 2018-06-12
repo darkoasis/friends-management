@@ -1,0 +1,450 @@
+{  
+   "swagger":"2.0",
+   "info":{  
+      "description":"REST APIs for Friend Management.",
+      "version":"1.0.0-SNAPSHOT",
+      "title":"Friend Management REST APIs",
+      "contact":{  
+         "name":"Alvin Flores",
+         "email":"alvinjavierflores@gmail.com"
+      },
+      "license":{  
+         "name":"Open"
+      }
+   },
+   "host":"localhost",
+   "basePath":"/api/v1/",
+   "tags":[  
+      {  
+         "name":"friends-controller",
+         "description":"Friends Controller"
+      }
+   ],
+   "paths":{  
+      "/friends/":{  
+         "get":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Get Registered Email Adresses",
+            "description":"Returns the list of registered email addresses",
+            "operationId":"listUsingGET",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"Email list was successfully retrieved",
+                  "schema":{  
+                     "$ref":"#/definitions/EmailList"
+                  }
+               }
+            }
+         },
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Create User Profile",
+            "description":"Persists a user profile in database",
+            "operationId":"createUserProfileUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"profile",
+                  "description":"User profile details",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/UserProfileParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "201":{  
+                  "description":"Data saved successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/Status"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               },
+               "422":{  
+                  "description":"Saving failed",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      },
+      "/friends/connection/":{  
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Create Friend Connection",
+            "description":"Create a friend connection between two email address",
+            "operationId":"createFriendConnectionUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"friends",
+                  "description":"Friend connection details",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/FriendsParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "201":{  
+                  "description":"Data saved successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/Status"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               },
+               "422":{  
+                  "description":"Saving failed",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      },
+      "/friends/connection/block/":{  
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Create Block Connection",
+            "description":"Blocked updates from requestor to target email address, no friend connection can be done once the target is blocked",
+            "operationId":"blockFriendUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"blockParam",
+                  "description":"action details",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/UserActionParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "201":{  
+                  "description":"Data saved successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/Status"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               },
+               "422":{  
+                  "description":"Saving failed",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      },
+      "/friends/connection/list/":{  
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Get Friend Connections",
+            "description":"Returns the list of friend connection for a specific email address",
+            "operationId":"getFriendConnectionUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"userEmailParam",
+                  "description":"User email address",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/UserEmailParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"Data retrieved successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/FriendsList"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               },
+               "422":{  
+                  "description":"Email address not registered",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      },
+      "/friends/connection/subscribe/":{  
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Create Subscription",
+            "description":"Creates a subscription between target and requestor email address",
+            "operationId":"subscribeToUpdatesUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"subscriptionParam",
+                  "description":"action details",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/UserActionParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "201":{  
+                  "description":"Data saved successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/Status"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               },
+               "422":{  
+                  "description":"Saving failed",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      },
+      "/friends/message/":{  
+         "post":{  
+            "tags":[  
+               "friends-controller"
+            ],
+            "summary":"Post Message",
+            "description":"Returns a list of email address eligible to receive message updates",
+            "operationId":"postUpdatesUsingPOST",
+            "consumes":[  
+               "application/json"
+            ],
+            "produces":[  
+               "application/json"
+            ],
+            "parameters":[  
+               {  
+                  "in":"body",
+                  "name":"msgParam",
+                  "description":"Message update details",
+                  "required":true,
+                  "schema":{  
+                     "$ref":"#/definitions/PostMessageParam"
+                  }
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"Retrieved data successfully",
+                  "schema":{  
+                     "$ref":"#/definitions/UpdateList"
+                  }
+               },
+               "400":{  
+                  "description":"Invalid parameters",
+                  "schema":{  
+                     "$ref":"#/definitions/ErrorMessage"
+                  }
+               }
+            }
+         }
+      }
+   },
+   "definitions":{  
+      "EmailList":{  
+         "type":"object",
+		 "properties":{
+			"emailList":{
+				"type":"array",
+				"items":{
+					"type":"string"
+				}
+			}
+		 }
+      },
+      "ErrorMessage":{  
+         "type":"object",
+         "properties":{  
+            "error":{  
+               "type":"string"
+            }
+         }
+      },
+      "FriendsList":{  
+         "type":"object",
+		 "properties":{
+			"status":{
+				"type":"boolean"
+			},
+			"friends":{
+				"type":"array",
+				"items":{
+					"type":"string"
+				}
+			},
+			"count":{
+				"type":"integer"
+			}
+		 }
+      },
+      "FriendsParam":{  
+         "type":"object",
+         "properties":{  
+            "friends":{  
+               "type":"array",
+               "items":{  
+                  "type":"string"
+               }
+            }
+         }
+      },
+      "PostMessageParam":{  
+         "type":"object",
+         "required":[  
+            "sender",
+            "text"
+         ],
+         "properties":{  
+            "sender":{  
+               "type":"string"
+            },
+            "text":{  
+               "type":"string"
+            }
+         }
+      },
+      "UpdateList":{  
+         "type":"object",
+		 "properties":{
+			"status":{
+				"type":"boolean"
+			},
+			"recepients":{
+				"type":"array",
+				"items":{
+					"type":"string"
+				}
+			}
+		}
+      },
+      "Status":{  
+         "type":"object",
+		 "properties":{
+			"status":{
+				"type":"boolean"
+			}
+		 }
+		 
+      },
+      "UserActionParam":{  
+         "type":"object",
+         "required":[  
+            "requestor",
+            "target"
+         ],
+         "properties":{  
+            "requestor":{  
+               "type":"string"
+            },
+            "target":{  
+               "type":"string"
+            }
+         }
+      },
+      "UserEmailParam":{  
+         "type":"object",
+         "required":[  
+            "email"
+         ],
+         "properties":{  
+            "email":{  
+               "type":"string"
+            }
+         }
+      },
+      "UserProfileParam":{  
+         "type":"object",
+         "required":[  
+            "emailId"
+         ],
+         "properties":{  
+            "emailId":{  
+               "type":"string"
+            },
+            "fullname":{  
+               "type":"string"
+            }
+         }
+      }
+   }
+}
